@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.vite/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# Editor and system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Secrets (database password, JWT secret). NEVER upload these
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.env.local
+secrets.json
+config.private.js
+
+# Build output
+dist/
+build/
+.vite/
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# PWA and cache files
+.cache/
+.parcel-cache/
+.eslintcache
+*.tsbuildinfo
+
+# Editor and system files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Zip and temp files
+*.zip
+*.rar
+tmp/
+temp/

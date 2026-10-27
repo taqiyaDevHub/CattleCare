@@ -1,0 +1,144 @@
+{
+  "disclaimer": "General guidance. Confirm the schedule with your vet.",
+  "dueSoonDays": 7,
+  "rules": [
+    {
+      "id": "fmd",
+      "name": "FMD (Foot and Mouth)",
+      "kind": "vaccine",
+      "appliesTo": [
+        "cow",
+        "buffalo"
+      ],
+      "femaleOnly": false,
+      "startAgeMonths": 4,
+      "boosterAfterDays": 30,
+      "intervalDays": 180,
+      "once": false,
+      "needsVetConfirm": true
+    },
+    {
+      "id": "hs",
+      "name": "HS (Haemorrhagic Septicaemia)",
+      "kind": "vaccine",
+      "appliesTo": [
+        "cow",
+        "buffalo"
+      ],
+      "femaleOnly": false,
+      "startAgeMonths": 6,
+      "boosterAfterDays": null,
+      "intervalDays": 365,
+      "once": false,
+      "needsVetConfirm": true
+    },
+    {
+      "id": "bq",
+      "name": "BQ (Black Quarter)",
+      "kind": "vaccine",
+      "appliesTo": [
+        "cow",
+        "buffalo"
+      ],
+      "femaleOnly": false,
+      "startAgeMonths": 6,
+      "boosterAfterDays": null,
+      "intervalDays": 365,
+      "once": false,
+      "needsVetConfirm": true
+    },
+    {
+      "id": "anthrax",
+      "name": "Anthrax",
+      "kind": "vaccine",
+      "appliesTo": [
+        "cow",
+        "buffalo"
+      ],
+      "femaleOnly": false,
+      "startAgeMonths": 4,
+      "boosterAfterDays": null,
+      "intervalDays": 365,
+      "once": false,
+      "needsVetConfirm": true
+    },
+    {
+      "id": "brucellosis",
+      "name": "Brucellosis",
+      "kind": "vaccine",
+      "appliesTo": [
+        "cow",
+        "buffalo"
+      ],
+      "femaleOnly": true,
+      "startAgeMonths": 4,
+      "maxAgeMonths": 8,
+      "boosterAfterDays": null,
+      "intervalDays": null,
+      "once": true,
+      "needsVetConfirm": true
+    },
+    {
+      "id": "ppr",
+      "name": "PPR (Goat Plague)",
+      "kind": "vaccine",
+      "appliesTo": [
+        "goat"
+      ],
+      "femaleOnly": false,
+      "startAgeMonths": 4,
+      "boosterAfterDays": null,
+      "intervalDays": 365,
+      "once": false,
+      "needsVetConfirm": true,
+      "sourceNote": "Start at 4 months, repeat yearly (ICAR-IVRI goat schedule; Pakistan PPR review). Some guides say every 3 years - yearly is the cautious choice."
+    },
+    {
+      "id": "enterotoxemia",
+      "name": "Enterotoxemia",
+      "kind": "vaccine",
+      "appliesTo": [
+        "goat"
+      ],
+      "femaleOnly": false,
+      "startAgeMonths": 4,
+      "boosterAfterDays": 28,
+      "intervalDays": 180,
+      "once": false,
+      "needsVetConfirm": true,
+      "sourceNote": "First dose at 4 months, booster 3-4 weeks later (ICAR-IVRI, CIRG), repeat every 6 months (ACIAR Sindh/Punjab factsheet, Assam govt)."
+    },
+    {
+      "id": "ccpp",
+      "name": "CCPP",
+      "kind": "vaccine",
+      "appliesTo": [
+        "goat"
+      ],
+      "femaleOnly": false,
+      "startAgeMonths": 4,
+      "boosterAfterDays": null,
+      "intervalDays": 365,
+      "once": false,
+      "needsVetConfirm": true,
+      "sourceNote": "Yearly revaccination (WOAH/KALRO advice). Start age of 4 months is an assumption - no firm source found. Vaccine is imported in Pakistan and may be hard to find."
+    },
+    {
+      "id": "deworming",
+      "name": "Deworming",
+      "kind": "deworming",
+      "appliesTo": [
+        "cow",
+        "buffalo",
+        "goat"
+      ],
+      "femaleOnly": false,
+      "startAgeMonths": 2,
+      "boosterAfterDays": null,
+      "intervalDays": 120,
+      "once": false,
+      "needsVetConfirm": true,
+      "sourceNote": "Sources differ: goats from 1-3 months (extension guides, CIRG), buffalo calves from 15 days. 120-day interval is the team default. 2 months is a middle choice."
+    }
+  ]
+}
