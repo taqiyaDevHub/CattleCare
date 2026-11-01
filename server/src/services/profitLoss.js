@@ -1,8 +1,9 @@
 import Animal from '../models/Animal.js';
 import User from '../models/User.js';
 import Transaction from '../models/Transaction.js';
+import { localMonthString } from './localNow.js';
 
-const monthNow = () => new Date().toISOString().slice(0, 7);
+const monthNow = localMonthString;
 const monthBounds = (month) => ({ start: `${month}-01`, end: `${month}-31` });
 const roundMoney = (value) => Math.round((Number(value) + Number.EPSILON) * 100) / 100;
 

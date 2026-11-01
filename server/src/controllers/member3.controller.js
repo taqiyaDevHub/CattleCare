@@ -135,3 +135,9 @@ export const updateBreedingOutcome = asyncHandler(async (req, res) => {
   // Calf creation is intentionally not automatic. The API returns a flag for the UI to offer the Add Calf flow.
   ok(res, { breeding: row, addCalfOffered: status === 'delivered' && addCalf === true });
 });
+
+export const deleteBreeding = asyncHandler(async (req, res) => {
+  const row = await ownedBreeding(req.params.id, req.user.id);
+  await Breeding.deleteOne({ _id: row._id, owner: req.user.id });
+  ok(res, { deleted: true });
+});

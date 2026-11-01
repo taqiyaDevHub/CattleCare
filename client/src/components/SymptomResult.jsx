@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { AlertTriangle, Stethoscope, Eye, Copy, Check, Info, ListChecks, RotateCcw, ClipboardList } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { buildLocalizedVetSummary, translateHint, translateTip } from '../utils/symptomTranslations';
 
 // Banner look for each urgency. Red is used for emergencies ONLY.
 const LOOK = {
@@ -45,9 +46,12 @@ export default function SymptomResult({ result, animal, selectedKeys, onReset })
 
   const showDeadWarning = selectedKeys.some((k) => DEAD_WARNING_KEYS.includes(k));
   const tips = (result.tips || []).filter((tip) => tip !== DEAD_WARNING_TEXT);
+  const localizedSummary = buildLocalizedVetSummary(result.vetSummaryData, t) || result.vetSummary;
+  const localizedHints = (result.hints || []).map((hint) => translateHint(hint, t));
+  const localizedTips = tips.map((tip) => translateTip(tip, t));
 
   const copy = async () => {
-    const ok = await copyText(result.vetSummary);
+    const ok = await copyText(localizedSummary);
     if (ok) {
       setCopied(true);
       toast.success(t('symptoms.copied'));
@@ -84,7 +88,7 @@ export default function SymptomResult({ result, animal, selectedKeys, onReset })
             {t('symptoms.why')}
           </h2>
           <ul className="list-disc space-y-1 pl-5 text-sm text-stone-700">
-            {result.hints.map((h) => (
+            {localizedHints.map((h) => (
               <li key={h}>{h}</li>
             ))}
           </ul>
@@ -98,7 +102,7 @@ export default function SymptomResult({ result, animal, selectedKeys, onReset })
             {t('symptoms.todo')}
           </h2>
           <ul className="list-disc space-y-1 pl-5 text-sm text-stone-700">
-            {tips.map((tip) => (
+            {localizedTips.map((tip) => (
               <li key={tip}>{tip}</li>
             ))}
           </ul>
@@ -114,7 +118,7 @@ export default function SymptomResult({ result, animal, selectedKeys, onReset })
           className="whitespace-pre-wrap break-words rounded-xl bg-cream p-3 font-sans text-sm text-stone-700"
           data-testid="vet-summary"
         >
-          {result.vetSummary}
+          {localizedSummary}
         </pre>
         <button type="button" className="btn-primary" onClick={copy}>
           {copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}

@@ -4,6 +4,7 @@ import { AppError } from '../utils/appError.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ok } from '../utils/respond.js';
 import { getMonthProfit, monthNow } from '../services/profitLoss.js';
+import { localDateString } from '../services/localNow.js';
 import { transactionQuerySchema, reportQuerySchema } from '../validators/money.js';
 
 const isObjectId = (id) => /^[a-f\d]{24}$/i.test(id);
@@ -79,7 +80,7 @@ async function optionalMilkModel() {
 }
 
 export const dashboard = asyncHandler(async (req, res) => {
-  const today = new Date().toISOString().slice(0, 10);
+  const today = localDateString();
   const month = today.slice(0, 7);
   const [MilkRecord, profit, vaccineAlerts, milkAlerts, breedingAlerts] = await Promise.all([
     optionalMilkModel(),
@@ -94,7 +95,7 @@ export const dashboard = asyncHandler(async (req, res) => {
   if (vaccineAlerts) {
     for (const alert of vaccineAlerts) alerts.push({
       type: 'vaccine', level: alert.level || 'due_now', animalId: alert.animalId,
-      animalName: alert.animalName || 'Animal', message: `${alert.vaccineName || 'Vaccine'}: ${alert.level || 'due now'}`,
+      animalName: alert.animalName || 'Animal', vaccineName: alert.vaccineName || 'Vaccine', message: `${alert.vaccineName || 'Vaccine'}: ${alert.level || 'due now'}`,
       date: alert.dueDate || today,
     });
   }
@@ -121,7 +122,7 @@ export const dashboard = asyncHandler(async (req, res) => {
         .populate('animal', 'name').limit(10).lean();
       for (const event of pending) alerts.push({
         type: 'vaccine', level: event.dueDate < today ? 'overdue' : 'due_now',
-        animalId: event.animal?._id?.toString(), animalName: event.animal?.name || 'Animal',
+        animalId: event.animal?._id?.toString(), animalName: event.animal?.name || 'Animal', vaccineName: event.name || 'Vaccine',
         message: `${event.name || 'Vaccine'} is ${event.dueDate < today ? 'overdue' : 'due today'}.`, date: event.dueDate || today,
       });
     } catch (err) { if (err.code !== 'ERR_MODULE_NOT_FOUND') throw err; }

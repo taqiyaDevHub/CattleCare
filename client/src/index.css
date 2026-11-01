@@ -9,6 +9,23 @@
   --color-danger: #B91C1C;
 }
 
+html[dir="rtl"] body, body.urdu-language {
+  font-family: "Noto Nastaliq Urdu", "Noto Naskh Arabic", serif;
+  line-height: 2;
+}
+
+html[dir="rtl"] input, html[dir="rtl"] textarea, html[dir="rtl"] select {
+  text-align: right;
+}
+
+html[dir="rtl"] .input {
+  direction: rtl;
+}
+
+html[dir="rtl"] body {
+  background-color: #FAF7F0;
+}
+
 body {
   background-color: #FAF7F0;
   color: #292524;
@@ -32,3 +49,9 @@ body {
     @apply mb-1 block text-sm font-medium text-earth;
   }
 }
+html[dir="rtl"] .mr-1 { margin-right: 0; margin-left: 0.25rem; }
+html[dir="rtl"] .mr-2 { margin-right: 0; margin-left: 0.5rem; }
+html[dir="rtl"] .ml-1 { margin-left: 0; margin-right: 0.25rem; }
+html[dir="rtl"] .ml-2 { margin-left: 0; margin-right: 0.5rem; }
+html[dir="rtl"] .text-left { text-align: right; }
+html[dir="rtl"] .text-right { text-align: left; }

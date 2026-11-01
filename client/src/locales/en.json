@@ -19,7 +19,13 @@
     "refresh": "Refresh dashboard",
     "saveFailed": "Could not save this record.",
     "deleteFailed": "Could not delete this record.",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "confirmDeleteTitle": "Confirm deletion",
+    "confirmDeleteMessage": "This record will be permanently deleted. This action cannot be undone.",
+    "confirmDeleteAction": "Yes, delete",
+    "deleteRecord": "Delete record",
+    "recordDeleted": "Record deleted.",
+    "deleting": "Deleting…"
   },
   "auth": {
     "loginTitle": "Welcome back",
@@ -139,6 +145,11 @@
       "vaccine": "Vaccine",
       "milk": "Milk drop",
       "breeding": "Breeding"
+    },
+    "vaccineLevels": {
+      "overdue": "overdue",
+      "due_now": "due today",
+      "due_soon": "due soon"
     }
   },
   "money": {
@@ -224,7 +235,18 @@
     "fromHistory": "Added from history",
     "calendarTitle": "Vaccine calendar",
     "calendarEmptyTitle": "Nothing due",
-    "calendarEmptyText": "No vaccines or deworming are waiting for your animals."
+    "calendarEmptyText": "No vaccines or deworming are waiting for your animals.",
+    "names": {
+      "fmd": "FMD (Foot and Mouth)",
+      "hs": "HS (Haemorrhagic Septicaemia)",
+      "bq": "BQ (Black Quarter)",
+      "anthrax": "Anthrax",
+      "brucellosis": "Brucellosis",
+      "ppr": "PPR (Goat Plague)",
+      "enterotoxemia": "Enterotoxemia",
+      "ccpp": "CCPP",
+      "deworming": "Deworming"
+    }
   },
   "symptoms": {
     "title": "Check symptoms",
@@ -272,6 +294,109 @@
     "copied": "Summary copied",
     "copyFailed": "Could not copy. Select the text and copy it.",
     "checkAnother": "Check another animal",
-    "openHealth": "Open health tab"
+    "openHealth": "Open health tab",
+    "signs": {
+      "bleeding_nose_mouth": "Bleeding from nose or mouth",
+      "difficulty_breathing": "Difficulty breathing",
+      "bloated_belly": "Bloated belly",
+      "cannot_stand": "Animal cannot stand",
+      "sudden_death": "Sudden death",
+      "snake_bite": "Snake bite",
+      "difficult_delivery": "Difficult delivery",
+      "mouth_blisters_limping": "Mouth blisters with limping",
+      "fever": "Fever or very hot body",
+      "not_eating": "Not eating at all",
+      "dull_weak": "Dull or very weak",
+      "bloody_dung": "Blood in dung",
+      "swollen_udder": "Swollen, hot or painful udder",
+      "drooling": "Drooling a lot",
+      "abnormal_discharge": "Discharge from private parts",
+      "eating_less": "Eating less than usual",
+      "not_chewing_cud": "Not chewing cud",
+      "diarrhoea": "Loose motions",
+      "cough": "Coughing",
+      "nasal_discharge": "Runny nose",
+      "limping": "Limping",
+      "milk_drop": "Less milk than usual",
+      "eye_problem": "Watery or red eyes",
+      "skin_lumps": "Lumps or wounds on skin",
+      "weight_loss": "Losing weight"
+    },
+    "hints": {
+      "bleeding_nose_mouth": "Bleeding from the nose or mouth can be a sign of a very serious illness.",
+      "difficulty_breathing": "Breathing trouble can become life-threatening very quickly.",
+      "bloated_belly": "A bloated belly can get worse within hours.",
+      "cannot_stand": "An animal that cannot stand needs urgent help.",
+      "sudden_death": "Sudden death can be linked to a serious infection that spreads. Keep people and animals away.",
+      "snake_bite": "A snake bite is an emergency, even if the animal looks fine.",
+      "difficult_delivery": "A delivery that is not progressing can put the mother and her young one at risk.",
+      "mouth_blisters_limping": "Blisters in the mouth together with limping can spread to other animals. Keep this animal apart.",
+      "fever": "Fever is a sign that the body is fighting a problem.",
+      "not_eating": "An animal that stops eating completely should be checked by a vet.",
+      "dull_weak": "A dull or weak animal may be seriously unwell.",
+      "bloody_dung": "Blood in the dung should always be checked.",
+      "swollen_udder": "A swollen or painful udder can quickly harm milk production.",
+      "drooling": "Heavy drooling can point to a problem in the mouth or throat.",
+      "abnormal_discharge": "Unusual discharge can be a sign of a problem with the womb.",
+      "eating_less": "Eating less than usual can be an early sign that something is wrong.",
+      "not_chewing_cud": "A healthy animal usually chews cud when resting.",
+      "diarrhoea": "Loose motions can make an animal weak from loss of water.",
+      "cough": "Coughing that continues should be watched closely.",
+      "nasal_discharge": "A runny nose should be watched, especially if it continues.",
+      "limping": "Limping can come from a hoof, leg or joint problem.",
+      "milk_drop": "A drop in milk can come from feed, heat, stress or the udder.",
+      "eye_problem": "Watery or red eyes should be watched.",
+      "skin_lumps": "Lumps or wounds should be watched for swelling or spreading.",
+      "weight_loss": "Slow weight loss can have many causes.",
+      "threeSigns": "Three or more signs together need a vet check.",
+      "sickThreeDays": "Sick for 3 days or more. Do not wait longer.",
+      "severalSigns": "Several signs for 2 days. A vet check is safer.",
+      "youngAnimal": "Young animals can get worse very fast."
+    },
+    "tips": {
+      "deadWarning": "Do not open the dead animal. Tell a vet.",
+      "keepAwayDead": "Keep people and other animals away from the animal.",
+      "callVet": "Call a vet now.",
+      "calm": "Keep the animal calm in a safe place.",
+      "separate": "Keep other animals away from it.",
+      "waitVet": "Wait for the vet's advice before giving anything.",
+      "contactVet": "Contact a vet today.",
+      "apartHerd": "Keep the animal apart from the herd.",
+      "noteIntake": "Note when it last ate, drank and gave milk, and tell the vet.",
+      "recheck": "Check the animal again this evening and tomorrow morning.",
+      "watchSigns": "Watch eating, cud chewing, dung and milk.",
+      "worsens": "If it gets worse or new signs appear, check again right away."
+    },
+    "summary": {
+      "title": "CattleCare vet summary",
+      "date": "Date",
+      "animal": "Animal",
+      "tag": "tag",
+      "milkingStatus": "Milking status",
+      "milking": "Milking",
+      "dry": "Dry",
+      "sickSince": "Sick since",
+      "today": "today",
+      "dayAgo": "day ago",
+      "daysAgo": "days ago",
+      "urgency": "Urgency shown by the app",
+      "signs": "Signs",
+      "notes": "Notes",
+      "lastVaccines": "Last vaccines",
+      "noneRecorded": "none recorded",
+      "months": "months",
+      "years": "years",
+      "kg": "kg"
+    }
+  },
+  "milkPage": {
+    "deleteRecord": "Delete record",
+    "recordDeleted": "Record deleted.",
+    "deleteError": "Could not delete this record.",
+    "confirmDeleteTitle": "Delete this record?",
+    "confirmDeleteMessage": "This record will be permanently deleted. This action cannot be undone.",
+    "confirmDeleteAction": "Yes, delete",
+    "cancelDelete": "Cancel",
+    "deleting": "Deleting…"
   }
 }

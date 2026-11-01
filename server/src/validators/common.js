@@ -7,3 +7,7 @@ export const dateStr = z
     const d = new Date(`${s}T00:00:00Z`);
     return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === s;
   }, 'Invalid date');
+
+export const monthStr = z
+  .string()
+  .regex(/^\d{4}-(0[1-9]|1[0-2])$/, 'Month must use YYYY-MM');

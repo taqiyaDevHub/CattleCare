@@ -9,6 +9,18 @@ import StatCard from '../components/StatCard';
 import AlertCard from '../components/AlertCard';
 import EmptyState from '../components/EmptyState';
 
+const VACCINE_KEYS = { 'FMD (Foot and Mouth)': 'fmd', 'HS (Haemorrhagic Septicaemia)': 'hs', 'BQ (Black Quarter)': 'bq', Anthrax: 'anthrax', Brucellosis: 'brucellosis', 'PPR (Goat Plague)': 'ppr', Enterotoxemia: 'enterotoxemia', CCPP: 'ccpp', Deworming: 'deworming' };
+
+function alertMessage(alert, t) {
+  if (alert.type === 'vaccine') {
+    const name = alert.vaccineName || String(alert.message || '').split(':')[0];
+    const key = VACCINE_KEYS[name];
+    const level = alert.level || (String(alert.message || '').includes('overdue') ? 'overdue' : 'due_now');
+    return `${key ? t(`vaccines.names.${key}`, { defaultValue: name }) : name}: ${t(`dashboard.vaccineLevels.${level}`, { defaultValue: level })}`;
+  }
+  return alert.message;
+}
+
 const money = (value) => new Intl.NumberFormat('en-PK', { style: 'currency', currency: 'PKR', maximumFractionDigits: 0 }).format(Number(value || 0));
 
 export default function Home() {
@@ -59,7 +71,7 @@ export default function Home() {
         {loading ? <div className="card animate-pulse text-sm text-stone-400">{t('common.loading')}</div> : data?.alerts?.length ? data.alerts.map((alert, index) => (
           <AlertCard key={`${alert.type}-${alert.animalId || index}-${alert.date}`} icon={alert.type === 'vaccine' ? Syringe : alert.type === 'milk' ? Droplets : CalendarClock}
             title={`${alert.animalName || t('dashboard.animal')} · ${t(`dashboard.alertTypes.${alert.type}`, { defaultValue: alert.type })}`}
-            message={alert.message} tone="amber" />
+            message={alertMessage(alert, t)} tone="amber" />
         )) : <EmptyState icon={CalendarClock} title={t('dashboard.allClear')} text={t('dashboard.noAlerts')} />}
       </section>
     </div>

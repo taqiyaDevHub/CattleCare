@@ -39,7 +39,7 @@ export const updateAnimalSchema = z
 
 export const sellSchema = z.object({
   soldDate: dateStr,
-  soldPrice: z.number().min(0),
+  soldPrice: z.number().finite().min(0.01, 'Sale price must be greater than zero'),
 });
 
 export const listQuerySchema = z.object({

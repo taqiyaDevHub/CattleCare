@@ -1,10 +1,12 @@
-import { useMemo } from 'react';
-import { ArrowDownLeft, ArrowUpRight, WalletCards } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
+import { useMemo, useState } from 'react';
+import { ArrowDownLeft, ArrowUpRight, WalletCards, Trash2 } from 'lucide-react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { getTransactions } from '../api/money';
+import { deleteTransaction, getTransactions } from '../api/money';
 import EmptyState from './EmptyState';
 import Skeleton from './Skeleton';
+import ConfirmDialog from './ConfirmDialog';
+import toast from 'react-hot-toast';
 
 const money = (value) => new Intl.NumberFormat('en-PK', {
   style: 'currency',
@@ -14,6 +16,8 @@ const money = (value) => new Intl.NumberFormat('en-PK', {
 
 export default function MoneyTab({ animalId, animal }) {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
+  const [deleteId, setDeleteId] = useState(null);
   const transactionsQuery = useQuery({
     queryKey: ['transactions', 'animal', animalId],
     queryFn: () => getTransactions({ animalId }),
@@ -31,6 +35,17 @@ export default function MoneyTab({ animalId, animal }) {
     return sum;
   }, { income: 0, expense: 0 }), [transactions]);
   const profit = totals.income - totals.expense;
+  const deleteMutation = useMutation({
+    mutationFn: () => deleteTransaction(deleteId),
+    onSuccess: () => {
+      toast.success(t('money.deleted'));
+      setDeleteId(null);
+      queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      queryClient.invalidateQueries({ queryKey: ['profit-loss'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] });
+    },
+    onError: (error) => toast.error(error.message || t('common.deleteFailed')),
+  });
 
   return (
     <div className="space-y-4">
@@ -104,15 +119,30 @@ export default function MoneyTab({ animalId, animal }) {
                     {record.date}{record.note ? ` · ${record.note}` : ''}
                   </p>
                 </div>
-                <p className={`shrink-0 font-bold ${record.type === 'income' ? 'text-brand' : 'text-stone-700'}`}>
-                  {record.type === 'income' ? '+' : '−'}{money(record.amount)}
-                </p>
+                <div className="shrink-0 text-right">
+                  <p className={`font-bold ${record.type === 'income' ? 'text-brand' : 'text-stone-700'}`}>
+                    {record.type === 'income' ? '+' : '−'}{money(record.amount)}
+                  </p>
+                  <button type="button" className="mt-1 inline-flex min-h-8 items-center text-xs text-danger" onClick={() => setDeleteId(record.id)}>
+                    <Trash2 className="mr-1 h-3 w-3" />{t('money.deleteRecord')}
+                  </button>
+                </div>
               </article>
             ))}
           </section>
           <p className="text-xs text-stone-500">{t('money.milkIncomeNote')}</p>
         </>
       )}
+      {deleteId && <ConfirmDialog
+        title={t('common.confirmDeleteTitle')}
+        message={t('money.confirmDelete')}
+        confirmLabel={t('common.confirmDeleteAction')}
+        cancelLabel={t('common.cancel')}
+        busyLabel={t('common.deleting')}
+        busy={deleteMutation.isPending}
+        onCancel={() => setDeleteId(null)}
+        onConfirm={() => deleteMutation.mutate()}
+      />}
     </div>
   );
 }

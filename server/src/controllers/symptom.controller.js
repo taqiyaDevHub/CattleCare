@@ -80,5 +80,13 @@ export const check = asyncHandler(async (req, res) => {
     today,
   });
 
-  ok(res, { urgency, hints, tips, vetSummary, healthEventId: event._id.toString() });
+  const vetSummaryData = {
+    today, sinceDate, sinceDays, ageMonths, urgency, symptoms,
+    animal: {
+      name: animal.name, tag: animal.tag, type: animal.type, gender: animal.gender,
+      weightKg: animal.weightKg, milkingStatus: animal.milkingStatus,
+    },
+    notes: notes || '', lastVaccines,
+  };
+  ok(res, { urgency, hints, tips, vetSummary, vetSummaryData, healthEventId: event._id.toString() });
 });

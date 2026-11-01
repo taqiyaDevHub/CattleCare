@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import { Syringe, Bug, Stethoscope, Check } from 'lucide-react';
+import { Syringe, Bug, Stethoscope, Check, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { markHealthDone } from '../api/health';
+import { markHealthDone, deleteHealth } from '../api/health';
 import { daysFromToday, formatDate, todayStr } from '../utils/healthDates';
+import ConfirmDialog from './ConfirmDialog';
 
 const ICONS = { vaccine: Syringe, deworming: Bug, illness: Stethoscope };
 
@@ -48,6 +49,7 @@ export default function HealthEventItem({ event, animalName }) {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState(todayStr());
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const note = useNoteText(event.notes);
 
   const isIllness = event.kind === 'illness';
@@ -68,6 +70,18 @@ export default function HealthEventItem({ event, animalName }) {
       setOpen(false);
     },
     onError: (err) => toast.error(err.message),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: () => deleteHealth(event.id),
+    onSuccess: () => {
+      toast.success(t('common.recordDeleted'));
+      for (const key of ['schedule', 'illness', 'health-pending', 'dashboard']) {
+        queryClient.invalidateQueries({ queryKey: [key] });
+      }
+      setConfirmDelete(false);
+    },
+    onError: (err) => toast.error(err.message || t('common.deleteFailed')),
   });
 
   let badge = null;
@@ -111,6 +125,10 @@ export default function HealthEventItem({ event, animalName }) {
         </div>
       </div>
 
+      <button type="button" className="btn-secondary w-full text-danger" onClick={() => setConfirmDelete(true)}>
+        <Trash2 className="h-5 w-5" />{t('common.deleteRecord')}
+      </button>
+
       {isPending && !open && (
         <button type="button" className="btn-secondary" onClick={() => setOpen(true)}>
           <Check className="h-5 w-5" />
@@ -145,6 +163,16 @@ export default function HealthEventItem({ event, animalName }) {
           </div>
         </div>
       )}
+      {confirmDelete && <ConfirmDialog
+        title={t('common.confirmDeleteTitle')}
+        message={t('common.confirmDeleteMessage')}
+        confirmLabel={t('common.confirmDeleteAction')}
+        cancelLabel={t('common.cancel')}
+        busyLabel={t('common.deleting')}
+        busy={deleteMutation.isPending}
+        onCancel={() => setConfirmDelete(false)}
+        onConfirm={() => deleteMutation.mutate()}
+      />}
     </div>
   );
 }

@@ -6,8 +6,10 @@ import { useTranslation } from 'react-i18next';
 import { getAnimals } from '../api/animals';
 import { createTransaction, deleteTransaction, getProfitLoss, getTransactions } from '../api/money';
 import EmptyState from '../components/EmptyState';
+import ConfirmDialog from '../components/ConfirmDialog';
+import { todayInPakistan } from '../utils/localDate';
 
-const todayISO = () => new Date().toISOString().slice(0, 10);
+const todayISO = todayInPakistan;
 const currentMonth = () => todayISO().slice(0, 7);
 const money = (value) => new Intl.NumberFormat('en-PK', { style: 'currency', currency: 'PKR', maximumFractionDigits: 0 }).format(Number(value || 0));
 
@@ -20,6 +22,8 @@ export default function Money() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+  const [deleting, setDeleting] = useState(false);
 
   const [form, setForm] = useState({
     type: 'expense',
@@ -101,15 +105,17 @@ export default function Money() {
     }
   }
 
-  async function remove(id) {
-    if (!window.confirm(t('money.confirmDelete'))) return;
+  async function remove() {
+    if (!deleteId) return;
+    setDeleting(true);
     try {
-      await deleteTransaction(id);
+      await deleteTransaction(deleteId);
       toast.success(t('money.deleted'));
+      setDeleteId(null);
       await load();
     } catch (error) {
       toast.error(error.message || t('common.deleteFailed'));
-    }
+    } finally { setDeleting(false); }
   }
 
   const totals = report?.totals || { income: 0, expense: 0, profit: 0 };
@@ -255,13 +261,23 @@ export default function Money() {
             </div>
             <div className="text-right">
               <p className={`font-bold ${tx.type === 'income' ? 'text-brand' : 'text-stone-700'}`}>{tx.type === 'income' ? '+' : '−'}{money(tx.amount)}</p>
-              <button onClick={() => remove(tx.id)} aria-label={t('money.deleteRecord')} className="mt-1 inline-flex min-h-8 items-center text-xs text-stone-400">
+              <button onClick={() => setDeleteId(tx.id)} aria-label={t('money.deleteRecord')} className="mt-1 inline-flex min-h-8 items-center text-xs text-stone-400">
                 <Trash2 className="mr-1 h-3 w-3" />{t('money.deleteRecord')}
               </button>
             </div>
           </div>
         )) : <EmptyState icon={WalletCards} title={t('money.noRecords')} text={t('money.noRecordsHelp')} />}
       </section>
+      {deleteId && <ConfirmDialog
+        title={t('common.confirmDeleteTitle')}
+        message={t('money.confirmDelete')}
+        confirmLabel={t('common.confirmDeleteAction')}
+        cancelLabel={t('common.cancel')}
+        busyLabel={t('common.deleting')}
+        busy={deleting}
+        onCancel={() => setDeleteId(null)}
+        onConfirm={remove}
+      />}
     </div>
   );
 }

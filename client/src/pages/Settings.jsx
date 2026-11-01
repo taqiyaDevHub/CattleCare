@@ -6,6 +6,7 @@ import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { LogOut } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import i18n from '../i18n';
 import { updateMe } from '../api/auth';
 import { useAuth } from '../context/AuthContext';
 import Field from '../components/Field';
@@ -47,6 +48,15 @@ export default function Settings() {
   return (
     <div className="space-y-4">
       <h1 className="text-2xl font-bold text-earth">{t('settings.title')}</h1>
+
+      <section className="card space-y-2">
+        <label htmlFor="app-language" className="label">{t('settings.language', 'Language')}</label>
+        <select id="app-language" className="input" value={i18n.language?.startsWith('ur') ? 'ur' : 'en'} onChange={(event) => i18n.changeLanguage(event.target.value)} aria-label={t('settings.language', 'Language')}>
+          <option value="en">English</option>
+          <option value="ur">اردو</option>
+        </select>
+        <p className="text-sm text-stone-500">{t('settings.languageHelp', 'Choose your preferred language.')}</p>
+      </section>
 
       <form onSubmit={handleSubmit((v) => mutation.mutate(v))} className="card space-y-4">
         <Field label={t('settings.name')} error={errors.name}>

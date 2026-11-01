@@ -5,3 +5,5 @@ export const createBreedingRecord = (body) => api.post('/breeding', body);
 export const getBreedingAlerts = () => api.get('/breeding/alerts');
 export const updateBreedingOutcome = (id, body) => api.patch(`/breeding/${id}/outcome`, body);
 export const getBreedingRecord = (id) => api.get(`/breeding/${id}`);
+
+export const deleteBreedingRecord = (id) => api.delete(`/breeding/${id}`);

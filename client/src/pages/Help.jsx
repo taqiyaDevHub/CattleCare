@@ -13,6 +13,7 @@ import SymptomResult from '../components/SymptomResult';
 const SINCE_DAYS = [0, 1, 2, 3, 4, 5, 7, 14, 30];
 
 function SignButton({ sign, checked, onToggle }) {
+  const { t } = useTranslation();
   const Box = checked ? CheckSquare : Square;
   return (
     <button
@@ -25,7 +26,7 @@ function SignButton({ sign, checked, onToggle }) {
       }`}
     >
       <Box className="h-6 w-6 shrink-0" aria-hidden="true" />
-      <span className="flex-1 text-sm font-medium">{sign.label}</span>
+      <span className="flex-1 text-sm font-medium">{t(`symptoms.signs.${sign.key}`, { defaultValue: sign.label })}</span>
       {sign.redFlag && <AlertTriangle className="h-5 w-5 shrink-0 text-accent" aria-hidden="true" />}
     </button>
   );

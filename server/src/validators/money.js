@@ -1,6 +1,7 @@
 import { z } from 'zod';
+import { dateStr, monthStr } from './common.js';
 
-const dateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must use YYYY-MM-DD');
+const dateSchema = dateStr;
 const animalIdSchema = z.string().regex(/^[a-f\d]{24}$/i, 'Invalid animal id');
 
 export const createTransactionSchema = z.object({
@@ -23,10 +24,10 @@ export const createTransactionSchema = z.object({
 export const updateTransactionSchema = createTransactionSchema;
 
 export const transactionQuerySchema = z.object({
-  month: z.string().regex(/^\d{4}-\d{2}$/, 'Month must use YYYY-MM').optional(),
+  month: monthStr.optional(),
   animalId: animalIdSchema.optional(),
 }).passthrough();
 
 export const reportQuerySchema = z.object({
-  month: z.string().regex(/^\d{4}-\d{2}$/, 'Month must use YYYY-MM').optional(),
+  month: monthStr.optional(),
 }).passthrough();
